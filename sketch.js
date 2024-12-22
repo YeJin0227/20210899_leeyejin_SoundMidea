@@ -7,10 +7,15 @@ let buttonJump1;
 let buttonJump2;
 let buttonSwitch;
 
+let slider;
+let sliderRate;
+
 let vol;
 let jumpV = 0;
 let amp;
 let currentMusic; 
+
+let musicText; 
 
 function preload() {
   soundFormats("mp3", "ogg");
@@ -65,14 +70,35 @@ function setup() {
   buttonSwitch.style('height', '50px');
   buttonSwitch.style('font-size', '30px');
   
+  slider = createSlider(0, 2, 0.5, 0.1);
+  slider.position(50, height - 250); 
+  slider.size(250, 100); 
+  let sliderText = createDiv('볼륨 조절');
+  sliderText.position(slider.x+65, slider.y - 15); 
+  sliderText.style('font-size', '30px');
+  sliderText.style('text-align', 'center');
+  sliderText.style('color', 'white');
+  
+  sliderRate = createSlider(0, 2, 1, 0.1);
+  sliderRate.position(350, height - 250); 
+  sliderRate.size(250,100);
+  let sliderRateText = createDiv('속도 조절');
+  sliderRateText.position(sliderRate.x+60, sliderRate.y - 15); 
+  sliderRateText.style('font-size', '30px');
+  sliderRateText.style('text-align', 'center');
+  sliderRateText.style('color', 'white');
+  
 }
 
 function draw() {
   background(30, 30, 50); // 어두운 배경색
   currentMusic.setVolume(vol);
+  vol = slider.value();
+  currentMusic.rate(sliderRate.value());
   let level = amp.getLevel();
   let centerX = 320;  // x 좌표
-  let centerY = 300;  // y 좌표 
+  let centerY = 300;  // y 좌표
+  
   
   // 중심 큰 별 (진폭에 따라 크기와 색상 변화)
   let centerSize = map(level, 0, 1, 50, 300); 
