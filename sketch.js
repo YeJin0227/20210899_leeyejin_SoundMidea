@@ -3,8 +3,11 @@ let music2;
 
 let playbutton;
 let buttonPause;
+let buttonJump1;
+let buttonJump2;
 
 let vol;
+let jumpV = 0;
 let amp;
 let currentMusic; 
 
@@ -21,6 +24,11 @@ function setup() {
   
   currentMusic = music1; 
   
+  musicText = createDiv("현재 재생 음악 : 재쓰비 '너와의 모든 지금'");
+  musicText.position(100, 650); // 화면에 텍스트 위치
+  musicText.style('font-size', '24px');
+  musicText.style('color', 'white');
+  
   playButton = createButton("PLAY");
   playButton.mousePressed(playMusic);
   playButton.position(250, 700);
@@ -35,19 +43,28 @@ function setup() {
   buttonPause.style('height', '50px');
   buttonPause.style('font-size', '30px');
   
+  buttonJump1 = createButton("전으로 점프");
+  buttonJump1.mousePressed(jumpSong2);
+  buttonJump1.position(160, 950);
+  buttonJump1.style('width', '150px');
+  buttonJump1.style('height', '40px');
+  buttonJump1.style('font-size', '25px');
+  
+  buttonJump2 = createButton("후로 점프");
+  buttonJump2.mousePressed(jumpSong);
+  buttonJump2.position(350, 950);
+  buttonJump2.style('width', '150px');
+  buttonJump2.style('height', '40px');
+  buttonJump2.style('font-size', '25px');
+
 }
 
 function draw() {
   background(30, 30, 50); // 어두운 배경색
   currentMusic.setVolume(vol);
-  vol = slider.value();
-  currentMusic.rate(sliderRate.value());
   let level = amp.getLevel();
   let centerX = 320;  // x 좌표
   let centerY = 300;  // y 좌표
-  
-  let progress = map(jumpV, 0, currentMusic.duration(), 0, 540);
-  progressBar.size(progress, 20); 
   
   // 중심 큰 별 (진폭에 따라 크기와 색상 변화)
   let centerSize = map(level, 0, 1, 50, 300); 
@@ -138,23 +155,4 @@ function jumpSong2() {
     jumpV = 0;
   }
   currentMusic.jump(jumpV);
-}
-
-
-
-function switchToLmj() {
-  if (currentMusic === music1) {
-    currentMusic.stop(); 
-    currentMusic = music2; 
-    currentMusic.play(); 
-    musicText.html("현재 재생 음악 : 이무진 '청춘 만화' ");
-    musicText.position(150, 650);
-  }
-
-  else if (currentMusic === music2) {
-    currentMusic.stop(); 
-    currentMusic = music1;
-    currentMusic.play(); 
-    musicText.html("현재 재생 음악 : 재쓰비 '너와의 모든 지금'");
-  }
 }
