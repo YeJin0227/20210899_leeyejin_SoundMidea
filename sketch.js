@@ -15,6 +15,9 @@ let jumpV = 0;
 let amp;
 let currentMusic; 
 
+let progressBar;
+let progressBarContainer;
+
 let musicText; 
 
 function preload() {
@@ -88,6 +91,18 @@ function setup() {
   sliderRateText.style('text-align', 'center');
   sliderRateText.style('color', 'white');
   
+
+  progressBarContainer = createDiv();
+  progressBarContainer.position(50, height - 400);
+  progressBarContainer.size(540, 20);
+  progressBarContainer.style('background-color', 'gray');
+
+  progressBar = createDiv();
+  progressBar.size(0, 20);
+  progressBar.style('background-color', 'green');
+  progressBarContainer.child(progressBar);
+  
+  
 }
 
 function draw() {
@@ -99,6 +114,8 @@ function draw() {
   let centerX = 320;  // x 좌표
   let centerY = 300;  // y 좌표
   
+  let progress = map(jumpV, 0, currentMusic.duration(), 0, 540);
+  progressBar.size(progress, 20); 
   
   // 중심 큰 별 (진폭에 따라 크기와 색상 변화)
   let centerSize = map(level, 0, 1, 50, 300); 
@@ -207,5 +224,6 @@ function switchToLmj() {
     currentMusic = music1;
     currentMusic.play(); 
     musicText.html("현재 재생 음악 : 재쓰비 '너와의 모든 지금'");
+    musicText.position(100, 650);
   }
 }
