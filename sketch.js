@@ -5,6 +5,7 @@ let playbutton;
 let buttonPause;
 let buttonJump1;
 let buttonJump2;
+let buttonSwitch;
 
 let vol;
 let jumpV = 0;
@@ -56,7 +57,14 @@ function setup() {
   buttonJump2.style('width', '150px');
   buttonJump2.style('height', '40px');
   buttonJump2.style('font-size', '25px');
-
+  
+  buttonSwitch = createButton("노래 전환");
+  buttonSwitch.mousePressed(switchToLmj);
+  buttonSwitch.position(250, 1150);
+  buttonSwitch.style('width', '150px');
+  buttonSwitch.style('height', '50px');
+  buttonSwitch.style('font-size', '30px');
+  
 }
 
 function draw() {
@@ -64,7 +72,7 @@ function draw() {
   currentMusic.setVolume(vol);
   let level = amp.getLevel();
   let centerX = 320;  // x 좌표
-  let centerY = 300;  // y 좌표
+  let centerY = 300;  // y 좌표 
   
   // 중심 큰 별 (진폭에 따라 크기와 색상 변화)
   let centerSize = map(level, 0, 1, 50, 300); 
@@ -155,4 +163,23 @@ function jumpSong2() {
     jumpV = 0;
   }
   currentMusic.jump(jumpV);
+}
+
+
+
+function switchToLmj() {
+  if (currentMusic === music1) {
+    currentMusic.stop(); 
+    currentMusic = music2; 
+    currentMusic.play(); 
+    musicText.html("현재 재생 음악 : 이무진 '청춘 만화' ");
+    musicText.position(150, 650);
+  }
+
+  else if (currentMusic === music2) {
+    currentMusic.stop(); 
+    currentMusic = music1;
+    currentMusic.play(); 
+    musicText.html("현재 재생 음악 : 재쓰비 '너와의 모든 지금'");
+  }
 }
